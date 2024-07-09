@@ -1,7 +1,7 @@
 from rest_framework import generics, status
 from rest_framework.response import Response
 from .paginators import TaskPaginator
-from .serializers import TaskSerializer
+from .serializers import TaskSerializer, CommentSerializer
 from .models import Task
 
 
@@ -30,11 +30,15 @@ class TaskDestroyAPIView(generics.DestroyAPIView):
 
 
 class TaskAsCompletedAPIView(generics.UpdateAPIView):
-    queryset = Task.objects.all()
     serializer_class = TaskSerializer
+    queryset = Task.objects.all()
 
     def update(self, request, *args, **kwargs):
         task = self.get_object()
         task.status = 'completed'
         task.save()
         return Response({'status': 'task marked as completed'}, status=status.HTTP_200_OK)
+
+
+class CommentCreateAPIView(generics.CreateAPIView):
+    serializer_class = CommentSerializer
