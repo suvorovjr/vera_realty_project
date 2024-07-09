@@ -21,3 +21,18 @@ class Task(models.Model):
     class Meta:
         verbose_name = 'задача'
         verbose_name_plural = 'задачи'
+
+
+class Comment(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    text = models.TextField(verbose_name='Тело комментария')
+    task = models.ForeignKey(Task, related_name='comment', on_delete=models.CASCADE, verbose_name='Задача')
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
+    updated_at = models.DateTimeField(auto_now=True, verbose_name='Дата изменения')
+
+    def __str__(self):
+        return f'{self.task} - {self.text[:25]}'
+
+    class Meta:
+        verbose_name = 'комментарий'
+        verbose_name_plural = 'комментарии'
