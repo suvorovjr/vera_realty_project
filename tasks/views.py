@@ -1,4 +1,5 @@
 from rest_framework import generics
+from .paginators import TaskPaginator
 from .serializers import TaskSerializer
 from .models import Task
 
@@ -10,6 +11,7 @@ class TaskCreateAPIView(generics.CreateAPIView):
 class TaskListAPIView(generics.ListAPIView):
     serializer_class = TaskSerializer
     queryset = Task.objects.all()
+    pagination_class = TaskPaginator
 
 
 class TaskRetrieveAPIView(generics.RetrieveAPIView):
