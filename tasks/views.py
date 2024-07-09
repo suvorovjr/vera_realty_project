@@ -29,11 +29,11 @@ class TaskDestroyAPIView(generics.DestroyAPIView):
     queryset = Task.objects.all()
 
 
-class TaskAsCompletedAPIView(generics.UpdateAPIView):
+class TaskAsCompletedAPIView(generics.RetrieveAPIView):
     serializer_class = TaskSerializer
     queryset = Task.objects.all()
 
-    def update(self, request, *args, **kwargs):
+    def retrieve(self, request, *args, **kwargs):
         task = self.get_object()
         task.status = 'completed'
         task.save()

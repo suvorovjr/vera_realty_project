@@ -9,7 +9,7 @@ class CommentSerializer(serializers.ModelSerializer):
 
 
 class TaskSerializer(serializers.ModelSerializer):
-    comments = CommentSerializer()
+    comments = CommentSerializer(many=True, read_only=True)
 
     class Meta:
         model = Task
